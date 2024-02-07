@@ -11,10 +11,15 @@ if(isset($_POST['submit'])){
     $clothes_price = $_POST['clothes_price'];
     $clothes_stock = $_POST['clothes_stock'];
 
-    $sql = "INSERT INTO clothes (clothes_name, clothes_type, clothes_brand, clothes_size, clothes_price, clothes_stock)
+    $sql1 = "INSERT INTO clothes (clothes_name, clothes_type, clothes_brand, clothes_size, clothes_price, clothes_stock)
             values ('$clothes_name', '$clothes_type','$clothes_brand','$clothes_size','$clothes_price','$clothes_stock')";
 
-    if ($con->query($sql) === TRUE) {
+    $admin_id = 'yongsin123';
+    $admin_latest_update_time = date('Y-m-d H:i:s');
+
+    $sql2 = "UPDATE admin SET admin_latest_update = '$admin_latest_update_time' where admin_id = '$admin_id'";
+
+    if ($con->query($sql1) === TRUE && $con->query($sql2) === TRUE) {
 
           // auto-generated ID for the new Clothe (auto increment)
           $clothes_id = $conn->insert_id;
@@ -22,15 +27,17 @@ if(isset($_POST['submit'])){
           // registration table
           // $registration_date = date("Y-m-d H:i:s"); // current date time
 
-          // $sql = "UPDATE admin SET last_update_time = "$registration_date";
-          // $conn->query($sql);
+          // $sql1 = "UPDATE admin SET last_update_time = "$registration_date";
+          // $conn->query($sql1);
 
           mysqli_close($con);
           echo '<script>alert("Clothes Added successfully!");</script>';
           echo '<meta http-equiv=REFRESH CONTENT=0;url=../index.php>';
 
     } else {
-      echo "Error: " . $sql . "<br>" . $con->error;
+      echo "Error: " . $sql1 . "<br>" . $con->error;
+      echo "Error: " . $sql2 . "<br>" . $con->error;
+
     }
 
 } else{

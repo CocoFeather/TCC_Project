@@ -30,7 +30,7 @@ else{}
 			<div class="topbar-console">
 				<div class="tobar-head fl">
 					<a href="#" class="topbar-logo fl">
-					<span><img src="Images/logo.png" width="20" height="20"/></span>
+					<span><img src="Images/Clothes_Images/clothes_logo.jpg" width="20" height="20"/></span>
 					</a>
 					<a href="index.php" class="topbar-home-link topbar-btn text-center fl"><span>Admin Site</span></a>
 				</div>
@@ -70,7 +70,7 @@ else{}
 							</li>
 						</ul>
 					</div>
-					<div class="sidebar-nav">
+					<!-- <div class="sidebar-nav">
 						<div class="sidebar-title">
 							<a href="#">
 								<span class="icon"><b class="fl icon-arrow-down"></b></span>
@@ -85,7 +85,7 @@ else{}
 								</a>
 							</li>
 						</ul>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div class="view-product">

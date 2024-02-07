@@ -11,7 +11,7 @@ if(isset($_POST['submit'])){
     $clothes_price = $_POST['clothes_price'];
     $clothes_stock = $_POST['clothes_stock'];
 
-    $sql = "UPDATE clothes 
+    $sql1 = "UPDATE clothes 
     SET clothes_name = '$clothes_name',
     clothes_type = '$clothes_type',
     clothes_brand = '$clothes_brand',
@@ -20,13 +20,19 @@ if(isset($_POST['submit'])){
     clothes_stock = '$clothes_stock'
     WHERE clothes_id = '$clothes_id'";
 
-    if ($con->query($sql) === TRUE) {
+    $admin_id = 'yongsin123';
+    $admin_latest_update_time = date('Y-m-d H:i:s');
+
+    $sql2 = "UPDATE admin SET admin_latest_update = '$admin_latest_update_time' where admin_id = '$admin_id'";
+
+    if ($con->query($sql1) === TRUE && $con->query($sql2) === TRUE) {
           mysqli_close($con);
           echo '<script>alert("Clothes updated successfully!");</script>';
           echo '<meta http-equiv=REFRESH CONTENT=0;url=../index.php>';
 
     } else {
-      echo "Error: " . $sql . "<br>" . $con->error;
+      echo "Error: " . $sql1 . "<br>" . $con->error;
+      echo "Error: " . $sql2 . "<br>" . $con->error;
     }
 
 } else{

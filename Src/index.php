@@ -1,10 +1,14 @@
 <?php
 session_start();
 include 'Backend/dbconnect.php';
-if(!isset($_SESSION["login_admin"])){
-//  header("Location: login.php");
+
+$admin_id = 'yongsin123';
+
+$query_admin = $con->query('SELECT * FROM admin WHERE admin.admin_id = "'.$admin_id.'"');
+if($query_admin->num_rows > 0){
+	$admin_data = $query_admin->fetch_assoc();
 }
-else{}
+
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +37,7 @@ else{}
 			<div class="topbar-console">
 				<div class="tobar-head fl">
 					<a href="#" class="topbar-logo fl">
-					<span><img src="Images/logo.png" width="20" height="20"/></span>
+					<span><img src="Images/Clothes_Images/clothes_logo.jpg" width="20" height="20"/></span>
 					</a>
 					<a href="index.php" class="topbar-home-link topbar-btn text-center fl"><span>Clothes Shop Admin Site</span></a>
 				</div>
@@ -43,12 +47,12 @@ else{}
 					<li class="fl topbar-info-item">
 					<div class="dropdown">
 						<a href="#" class="topbar-btn">
-						<span class="fl text-normal">yong sin</span>
-						<span class="icon-arrow-down"></span>
+						<span class="fl text-normal"><?php echo $admin_data["admin_name"]?></span>
+						<!-- <span class="icon-arrow-down"></span> -->
 						</a>
-						<ul class="dropdown-menu">
+						<!-- <ul class="dropdown-menu">
 							<li><a href="login.html">Logout</a></li>
-						</ul>
+						</ul> -->
 					</div>
 					</li>
 				</ul>
@@ -73,7 +77,7 @@ else{}
 							</li>
 						</ul>
 					</div>
-					<div class="sidebar-nav">
+					<!-- <div class="sidebar-nav">
 						<div class="sidebar-title">
 							<a href="#">
 								<span class="icon"><b class="fl icon-arrow-down"></b></span>
@@ -88,7 +92,7 @@ else{}
 								</a>
 							</li>
 						</ul>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div class="view-product">
@@ -96,7 +100,7 @@ else{}
 					<div class="authority-head">
 						<div class="manage-head">
 							<h6 class="layout padding-left manage-head-con">Clothes List
-							<span class="fr text-small text-normal padding-top">Last Update Time: 2016-07-08</span>
+							<span class="fr text-small text-normal padding-top">Last Update Time: <?php echo $admin_data["admin_latest_update"]?></span>
 							<!-- <span class="fr margin-large-right padding-top text-small text-normal">Latest Version：<em class="text-main">2.4.0.160708</em></span> -->
 							</h6>
 						</div>
@@ -120,14 +124,18 @@ else{}
 								
 								<?php    
 									$num_rows = 0; // Initialize the $num_rows variable 
-									
+									$records_per_page = 15; // Number of records per page
+									$page_number = 1; // Assuming you want to fetch records for the second page
+
+									$offset = ($page_number - 1) * $records_per_page; // Calculate the offset
 									$query = $con->query(
 										"SELECT c.clothes_id,c.clothes_name, ct.clothes_type_name, cb.clothes_brand_name, cs.clothes_size_name, c.clothes_price,c.clothes_stock 
 										FROM clothes c
 										INNER JOIN clothes_type ct ON c.clothes_type = ct.clothes_type_id
 										INNER JOIN clothes_brand cb ON c.clothes_brand = cb.clothes_brand_id 
 										INNER JOIN clothes_size cs ON c.clothes_size = cs.clothes_size_id
-										ORDER BY c.clothes_id;" 
+										ORDER BY c.clothes_id
+										LIMIT $records_per_page OFFSET $offset;"
 									);
 									if($query->num_rows > 0){
 									while($row = $query->fetch_assoc()){
@@ -174,16 +182,17 @@ else{}
 							<div class="page">
 								<div class="page">
 									<ul class="offcial-page margin-top margin-big-right">
-										<li>Total<em class="margin-small-left margin-small-right"><?php echo $num?></em>entries</li>
-										<li>Each Page<em class="margin-small-left margin-small-right">15</em>entries</li>
-										<li><a class="next disable">Prev</a></li>
+										<li>Total <em class="margin-small-left margin-small-right"><?php echo $num; ?></em> entries</li>
+										<li>Each Page <em class="margin-small-left margin-small-right">15</em> entries</li>
+										<li><a href="?page=<?php echo max(1, $currentPage - 1); ?>" class="next <?php echo ($currentPage <= 1) ? 'disable' : ''; ?>">Prev</a></li>
 										<li></li>
-										<li><a class="next disable">Next</a></li>
-										<li><span class="fl">Total<em class="margin-small-left margin-small-right"><?php echo ceil(($num / 15))?></em>Pages</span></li>
+										<li><a href="?page=<?php echo min(ceil($num / 15), $currentPage + 1); ?>" class="next <?php echo ($currentPage >= ceil($num / 15)) ? 'disable' : ''; ?>">Next</a></li>
+										<li><span class="fl">Total <em class="margin-small-left margin-small-right"><?php echo ceil(($num / 15)); ?></em> Pages</span></li>
 									</ul>
 								</div>
 							</div>
 						</div>
+
 					</div>
 				</div>
 			</div>

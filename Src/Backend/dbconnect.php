@@ -1,9 +1,9 @@
 <?php
 /* Database credentials. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
-define('DB_SERVER', 'tcc-project-db2.cb66soim6w7q.us-east-1.rds.amazonaws.com');
+define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'root');
-define('DB_PASSWORD', 'admin123');
+define('DB_PASSWORD', '');
 define('DB_NAME', 'tcc_clothes_shop');
  
 /* Attempt to connect to MySQL database */
