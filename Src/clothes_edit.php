@@ -1,10 +1,13 @@
 <?php
 session_start();
 include 'Backend/dbconnect.php';
-if(!isset($_SESSION["login_admin"])){
-//  header("Location: login.php");
+
+$admin_id = 'yongsin123';
+
+$query_admin = $con->query('SELECT * FROM admin WHERE admin.admin_id = "'.$admin_id.'"');
+if($query_admin->num_rows > 0){
+	$admin_data = $query_admin->fetch_assoc();
 }
-else{}
 ?>
 
 <!DOCTYPE html>
@@ -40,11 +43,11 @@ else{}
 					<li class="fl topbar-info-item">
 					<div class="dropdown">
 						<a href="#" class="topbar-btn">
-						<span class="fl text-normal">yong sin</span>
-						<span class="icon-arrow-down"></span>
+							<span class="fl text-normal"><?php echo $admin_data["admin_name"]?></span>
+							<span class="icon-arrow-down"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="login.html">Logout</a></li>
+							<li ><a href="login.html" style="pointer-events: none; cursor: not-allowed;">Logout</a></li>
 						</ul>
 					</div>
 					</li>
@@ -167,9 +170,9 @@ else{}
 										<?php
 												}
 											}
-										?>
+										?> 
 										</select>
-									</div>
+									</div> 
 								</div>
 								<div class="real-name-con height-main margin-top-25 clearfix">
 									<p class="content-left-zoon">
@@ -180,13 +183,13 @@ else{}
 											<?php
 												$query_cs = $con->query('SELECT * FROM clothes_size');
 												if($query_cs->num_rows > 0){
-													while($row_cb = $query_cs->fetch_assoc()){
+													while($row_cs = $query_cs->fetch_assoc()){
 											?>
 												<label>
-													<input type="radio" name="clothes_size" value="0" 
-														<?php echo ($row_c["clothes_size"] == $row_cb["clothes_size_id"]) ? 'checked' : ''; ?>
+													<input type="radio" name="clothes_size" value="<?php echo $row_cs["clothes_size_id"];?>" 
+														<?php echo ($row_c["clothes_size"] == $row_cs["clothes_size_id"]) ? 'checked' : ''; ?>
 													> 
-													<?php echo $row_cb["clothes_size_name"];?> 
+													<?php echo $row_cs["clothes_size_name"];?> 
 												</label>
 											<?php
 													}

@@ -48,11 +48,11 @@ if($query_admin->num_rows > 0){
 					<div class="dropdown">
 						<a href="#" class="topbar-btn">
 						<span class="fl text-normal"><?php echo $admin_data["admin_name"]?></span>
-						<!-- <span class="icon-arrow-down"></span> -->
+						<span class="icon-arrow-down"></span>
 						</a>
-						<!-- <ul class="dropdown-menu">
-							<li><a href="login.html">Logout</a></li>
-						</ul> -->
+						<ul class="dropdown-menu">
+							<li ><a href="login.html" style="pointer-events: none; cursor: not-allowed;">Logout</a></li>
+						</ul>
 					</div>
 					</li>
 				</ul>
@@ -175,9 +175,9 @@ if($query_admin->num_rows > 0){
 								<?php 
 										}
 									} 
-								?>  
+								?>   
 							</div>
-						</div>
+						</div> 
 						<div class="show-page padding-big-right">
 							<div class="page">
 								<div class="page">
